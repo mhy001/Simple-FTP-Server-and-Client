@@ -1,0 +1,24 @@
+Protocol Design
+
+Message Structure
+first 10 bytes specify the size of the data
+the remaining bytes are purely data
+min size 10 bytes
+max size 10 + 9999999999 bytes
+
+Messages server sends over the control connection:
+list of files in server's current working directory
+file transfer errors (for example, filename is not valid)
+ephemeral port number
+
+Messages client sends over the control connection:
+all commands
+connection requests
+
+To set up the file transfer channel:
+client issues a file transfer command
+server response with an available port
+client connects
+server/client starts sending the file to the other party
+
+The number of bytes in the file is specified in the first 10 bytes of the message. Files larger than the max size lists above will cause an issue.
